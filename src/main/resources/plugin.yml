@@ -1,0 +1,19 @@
+# This is a sample plugin.yml
+# For more infomration refer to http://wiki.bukkit.org/Plugin_YAML
+main: com.github.sagaciouszzzz.bukkit.samplelocalchat.SampleLocalChat
+name: ${project.name}
+version: ${project.version}
+author: SagaciousZed
+description: ${project.description}
+commands:
+  setLocalChat:
+    description: set if local chat is enabled
+    usage: /<command> boolean
+    permission: samplelocalchat.set
+permissions:
+  samplelocalchat.*:
+    description: gives all permissions of the SampleLocalChat
+    default: op
+    children:
+      samplelocalchat.set:
+        description: gives permission to toggle set if locla chat is enforced

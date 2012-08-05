@@ -1,0 +1,4 @@
+# Configuration for SampleLocalChat
+localchat:
+  enabled: true
+  localrange: 256.0
