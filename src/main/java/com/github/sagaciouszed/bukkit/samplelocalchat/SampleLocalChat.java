@@ -1,5 +1,7 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -11,8 +13,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class SampleLocalChat extends JavaPlugin {
 
-    AtomicBoolean enabled;
-    AtomicReference<ConcurrentHashMap<String, ImmutableLocation>> tempLocations;
+    volatile boolean enabled;
+    volatile Map<String, ImmutableLocation> tempLocations;
 
     /*
      * This is called when your plug-in is enabled
@@ -22,8 +24,8 @@ public class SampleLocalChat extends JavaPlugin {
         // save the default configuration file
         saveDefaultConfig();
 
-        tempLocations = new AtomicReference<ConcurrentHashMap<String, ImmutableLocation>>();
-        enabled = new AtomicBoolean(getConfig().getBoolean("localchat.enabled"));
+        tempLocations = Collections.emptyMap();
+        enabled = getConfig().getBoolean("localchat.enabled");
 
         // set the command executor for setLocalChat
         this.getCommand("setLocalChat").setExecutor(new SampleLocalChatCommandExecutor(this));

@@ -1,6 +1,7 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,15 +39,9 @@ public class SampleLocalChatListener implements Listener {
      */
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        final AtomicBoolean enabled = plugin.enabled;
-        final AtomicReference<ConcurrentHashMap<String, ImmutableLocation>> tempLocations = plugin.tempLocations;
-        if (enabled == null
-                || tempLocations == null
-                || enabled.get())
-            return;
-        
-        final ConcurrentHashMap<String, ImmutableLocation> locations = tempLocations.get();
-        if (locations == null)
+        final boolean enabled = plugin.enabled;
+        final Map<String, ImmutableLocation> locations = plugin.tempLocations;
+        if (!enabled || locations == null)
             return;
 
         final Iterator<Player> iterator = event.getRecipients().iterator();

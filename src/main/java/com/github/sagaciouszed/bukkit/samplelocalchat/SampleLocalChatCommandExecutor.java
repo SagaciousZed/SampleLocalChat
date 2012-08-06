@@ -24,8 +24,8 @@ public class SampleLocalChatCommandExecutor implements CommandExecutor {
      */
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0) {
-            plugin.enabled.set(Boolean.parseBoolean(args[0]));
-            plugin.getServer().broadcastMessage(format("Local Chat Only: {0}", plugin.enabled.get()));
+            plugin.enabled = Boolean.parseBoolean(args[0]);
+            plugin.getServer().broadcastMessage(format("Local Chat Only: {0}", plugin.enabled));
             return true;
         } else {
             return false;
