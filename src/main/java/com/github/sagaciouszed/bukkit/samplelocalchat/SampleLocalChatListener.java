@@ -55,7 +55,7 @@ public class SampleLocalChatListener implements Listener {
             final Location recipientLocation = locations.get(recipient.getName());
             if (recipientLocation != null
                     && playerLocation != null
-                    && playerLocation.getWorld().getName().equals(recipientLocation.getWorld().getName())
+                    && playerLocation.getWorld().getUID().equals(recipientLocation.getWorld().getUID())
                     && playerLocation.distanceSquared(recipientLocation) > distanceSquared) {
                 iterator.remove();
             }
