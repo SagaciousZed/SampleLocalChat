@@ -12,7 +12,7 @@ public class SampleLocalChat extends JavaPlugin {
 
     // There variables are volatile because they will be read from another thread.
     volatile boolean enabled;
-    volatile ConcurrentHashMap<String, Location> locationsStore = new ConcurrentHashMap<String, Location>();
+    final ConcurrentHashMap<String, Location> locationsStore = new ConcurrentHashMap<String, Location>();
 
     /*
      * This is called when your plug-in is enabled
