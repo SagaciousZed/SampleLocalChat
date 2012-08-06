@@ -1,11 +1,8 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
@@ -13,8 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class SampleLocalChat extends JavaPlugin {
 
+    // There variables are volatile because they will be read from another thread.
     volatile boolean enabled;
-    volatile Map<String, ImmutableLocation> tempLocations;
+    volatile ConcurrentHashMap<String, Location> locationsStore = new ConcurrentHashMap<String, Location>();
 
     /*
      * This is called when your plug-in is enabled
@@ -24,7 +22,6 @@ public class SampleLocalChat extends JavaPlugin {
         // save the default configuration file
         saveDefaultConfig();
 
-        tempLocations = Collections.emptyMap();
         enabled = getConfig().getBoolean("localchat.enabled");
 
         // set the command executor for setLocalChat
@@ -34,12 +31,12 @@ public class SampleLocalChat extends JavaPlugin {
         new SampleLocalChatListener(this, getConfig().getDouble("localchat.distance"));
 
         // Schedule the repeating sync task
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new SampleLocalChatLocationSyncTask(this), 0, 1);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new SampleLocalChatLocationSyncTask(this), 0, 20);
     }
 
     @Override
     public void onDisable() {
-        tempLocations = null;
+        locationsStore.clear();
         getServer().getScheduler().cancelTasks(this);
     }
 

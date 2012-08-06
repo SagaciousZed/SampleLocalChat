@@ -1,10 +1,8 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class SampleLocalChatLocationSyncTask implements Runnable {
@@ -19,11 +17,10 @@ public class SampleLocalChatLocationSyncTask implements Runnable {
      * Go through every player, and store the important parts of their location
      */
     public void run() {
-        final Map<String, ImmutableLocation> playerLocationMap = new HashMap<String, ImmutableLocation>();
+        final Map<String, Location> playerLocationMap = plugin.locationsStore;
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            playerLocationMap.put(player.getName(), new ImmutableLocation(player.getLocation()));
+            playerLocationMap.put(player.getName(), player.getLocation());
         }
-        plugin.tempLocations = Collections.unmodifiableMap(playerLocationMap);
     }
 
 }

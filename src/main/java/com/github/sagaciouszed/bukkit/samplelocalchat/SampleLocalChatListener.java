@@ -1,15 +1,14 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /*
  * This is a sample event listener
@@ -29,6 +28,10 @@ public class SampleLocalChatListener implements Listener {
         this.plugin = plugin;
         this.distanceSquared = distanceSquared;
     }
+    
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        plugin.locationsStore.remove(event.getPlayer().getName());
+    }
 
     /**
      * Go through the list of recipients and determine if they are closer than
@@ -40,18 +43,19 @@ public class SampleLocalChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         final boolean enabled = plugin.enabled;
-        final Map<String, ImmutableLocation> locations = plugin.tempLocations;
+        final ConcurrentHashMap<String, Location> locations = plugin.locationsStore;
         if (!enabled || locations == null)
             return;
 
         final Iterator<Player> iterator = event.getRecipients().iterator();
-        final ImmutableLocation playerLocation = locations.get(event.getPlayer().getName());
+        final Location playerLocation = locations.get(event.getPlayer().getName());
 
         while (iterator.hasNext()) {
             final Player recipient = iterator.next();
-            final ImmutableLocation recipientLocation = locations.get(recipient.getName());
+            final Location recipientLocation = locations.get(recipient.getName());
             if (recipientLocation != null
                     && playerLocation != null
+                    && playerLocation.getWorld().getName().equals(recipientLocation.getWorld().getName())
                     && playerLocation.distanceSquared(recipientLocation) > distanceSquared) {
                 iterator.remove();
             }

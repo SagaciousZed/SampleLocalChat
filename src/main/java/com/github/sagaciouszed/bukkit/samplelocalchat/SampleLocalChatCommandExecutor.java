@@ -1,7 +1,5 @@
 package com.github.sagaciouszed.bukkit.samplelocalchat;
 
-import java.text.MessageFormat;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,15 +23,11 @@ public class SampleLocalChatCommandExecutor implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length > 0) {
             plugin.enabled = Boolean.parseBoolean(args[0]);
-            plugin.getServer().broadcastMessage(format("Local Chat Only: {0}", plugin.enabled));
+            plugin.getServer().broadcastMessage(String.format("Local Chat Only: %s", plugin.enabled));
             return true;
         } else {
             return false;
         }
-    }
-    
-    private String format(String s, Object... args) {
-        return MessageFormat.format(s, args);
     }
 
 }
