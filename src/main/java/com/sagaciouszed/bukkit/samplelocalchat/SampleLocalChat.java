@@ -1,4 +1,4 @@
-package com.github.sagaciouszed.bukkit.samplelocalchat;
+package com.sagaciouszed.bukkit.samplelocalchat;
 
 import java.util.concurrent.ConcurrentHashMap;
 

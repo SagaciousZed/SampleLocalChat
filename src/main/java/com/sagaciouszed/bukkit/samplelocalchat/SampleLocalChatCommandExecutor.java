@@ -1,4 +1,4 @@
-package com.github.sagaciouszed.bukkit.samplelocalchat;
+package com.sagaciouszed.bukkit.samplelocalchat;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
