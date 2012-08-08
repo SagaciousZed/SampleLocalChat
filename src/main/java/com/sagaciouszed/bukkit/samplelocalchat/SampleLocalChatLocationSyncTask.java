@@ -14,7 +14,7 @@ public class SampleLocalChatLocationSyncTask implements Runnable {
     }
 
     /**
-     * Go through every player, and store the important parts of their location
+     * Go through every player, and store their location
      */
     public void run() {
         final Map<String, Location> playerLocationMap = plugin.locationsStore;

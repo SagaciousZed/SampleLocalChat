@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 /*
  * This is a sample event listener
@@ -28,14 +29,26 @@ public class SampleLocalChatListener implements Listener {
         this.plugin = plugin;
         this.distanceSquared = distanceSquared;
     }
-    
+
+    /**
+     * When the player quits remove them from the location cache
+     * 
+     * @param event
+     */
     public void onPlayerQuit(PlayerQuitEvent event) {
         plugin.locationsStore.remove(event.getPlayer().getName());
     }
 
     /**
+     * When the player teleports update their position
+     */
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        plugin.locationsStore.put(event.getPlayer().getName(), event.getTo());
+    }
+
+    /**
      * Go through the list of recipients and determine if they are closer than
-     * the local distanceSquared
+     * the distanceSquared for local chat.
      * if not remove them
      * 
      * @param event
