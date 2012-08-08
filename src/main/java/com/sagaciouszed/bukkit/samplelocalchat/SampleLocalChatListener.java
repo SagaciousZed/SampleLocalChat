@@ -1,7 +1,7 @@
 package com.sagaciouszed.bukkit.samplelocalchat;
 
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ public class SampleLocalChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         final boolean enabled = plugin.enabled;
-        final ConcurrentHashMap<String, Location> locations = plugin.locationsStore;
+        final Map<String, Location> locations = plugin.locationsStore;
         if (!enabled || locations == null)
             return;
 
