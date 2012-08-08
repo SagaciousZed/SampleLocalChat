@@ -1,7 +1,6 @@
 package com.sagaciouszed.bukkit.samplelocalchat;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,7 +12,7 @@ public class SampleLocalChat extends JavaPlugin {
 
     // There variables are volatile because they will be read from another thread.
     volatile boolean enabled;
-    volatile Map<String, Location> locationsStore = Collections.emptyMap();
+    final ConcurrentHashMap<String, Location> locationsStore = new ConcurrentHashMap<String, Location>();
 
     /*
      * This is called when your plug-in is enabled
