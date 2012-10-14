@@ -1,4 +1,4 @@
-SampleBukkitPlugin
+SampleLocalChat
 ======
 
 This is a sample plug-in for the Bukkit API. It requires a CraftBukkit server.
